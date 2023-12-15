@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.pavan.kotlinpaging.paging.loadadpter
 import com.pavan.kotlinpaging.paging.pagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,7 +24,10 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
-        recyclerView.adapter = adapter
+        recyclerView.adapter = adapter.withLoadStateHeaderAndFooter(
+            header = loadadpter(),
+            footer = loadadpter()
+        )
 
         viewmodel.list.observe(this, {
             adapter.submitData(lifecycle, it)
